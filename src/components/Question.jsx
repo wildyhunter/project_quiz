@@ -1,20 +1,42 @@
 import React from 'react';
-import { QuizContext } from '../context/quiz';
 import './Question.css';
+
+import { QuizContext } from '../context/quiz';
+import Option from './Option';
 
 const Question = () => {
     const [quizStates, dispatch] = React.useContext(QuizContext);
     const currentQuestion = quizStates.questions[quizStates.currentQuestion];
 
-    console.log(quizStates);
+    const onSelectOption = (option) => {
+        dispatch({
+            type: 'CHECK_ANSWER',
+            payload: { answer: currentQuestion.answer, option },
+        });
+    };
+
     return (
-        <div id='question'>
-            <p>Pergunta {quizStates.currentQuestion + 1} de {quizStates.questions.length}</p>
+        <div id="question">
+            <p>
+                Pergunta {quizStates.currentQuestion + 1} de{' '}
+                {quizStates.questions.length}
+            </p>
             <h2>{currentQuestion.question}</h2>
             <div id="options-container">
-                <p>Opções</p>
+                {currentQuestion.options.map((option) => (
+                    <Option
+                        option={option}
+                        key={option}
+                        answer={currentQuestion.answer}
+                        selectOption={onSelectOption}
+                    />
+                ))}
             </div>
-            <button onClick={() => dispatch({ type: 'CHANGE_QUESTION' })}>Continuar</button>
+            {quizStates.answerSelected && (
+                <button onClick={() => dispatch({ type: 'CHANGE_QUESTION' })}>
+                    Continuar
+                </button>
+            )}
         </div>
     );
 };
