@@ -4,8 +4,21 @@
     display: flex;
     flex-direction: column;
 }
+.pontos-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
-#gameover h2, #welcome p {
+.pontos {
+    margin: 0 5px;
+    padding: 3px 8px;
+    border-radius: .3rem;
+    background-color: #8435de;
+    color: white;
+}
+
+#gameover h2, #gameover p {
     margin-bottom: 1rem;
 }
 
